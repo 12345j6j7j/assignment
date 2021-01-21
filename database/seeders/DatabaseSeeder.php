@@ -6,6 +6,12 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    protected $seeders = [
+        RoleAndPermissionSeeder::class,
+        NotificationSeeder::class,
+        ShipSeeder::class,
+    ];
+        
     /**
      * Seed the application's database.
      *
@@ -13,6 +19,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call($this->seeders);
     }
 }

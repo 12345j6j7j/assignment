@@ -20,7 +20,7 @@
               <div class="tab-content pt-3">
                 <div class="tab-pane active">
   
-                  <form class="form" action="{{ route('ships.update', $ship) }}" method="post">
+                  <form class="form" action="{{ route('ships.update', $ship) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     
@@ -60,16 +60,25 @@
                             <div class="form-group">
                               <label>Image</label>
                               
-                              <input type="file" class="form-control" id="customFile" enctype="multipart/form-data"/>
+                              <input type="file" 
+                                     class="form-control" 
+                                     name="image"/>
                             </div>
+                            @error('image')
+                              <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                            @enderror
                           </div>
+
                       </div>
                     </div>
+                    
                     <div class="row">
                       <div class="col d-flex justify-content-end">
-                        <button class="btn btn-primary" type="submit">Save Changes</button>
+                        <a href="{{ \URL::previous() }}" class="btn btn-primary">Back</a>
                       </div>
+                      <button class="btn btn-success" type="submit">Save Changes</button>
                     </div>
+
                   </form>
   
                 </div>

@@ -35,10 +35,9 @@
                             <h6 class="mb-0">Image</h6>
                             <div class="d-flex flex-column align-items-center text-center">
                               
-                              <img src="https://bootdey.com/img/Content/avatar/avatar7.png" 
-                              alt="Admin" 
-                              class="rounded-circle" 
-                              width="150">
+                              <div class="product-details-image-holder bg-shade-whisper">
+                                <img src="{{ $ship->image ? asset('storage/' . str_replace("public/","",$ship->image)) : "https://dummyimage.com/825x478/999999/000000&text=630x400" }}">
+                              </div>
                               
                             </div>
                           </div>

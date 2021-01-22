@@ -29,7 +29,7 @@ class ShipRequest extends FormRequest
                     return [
                         'name' => 'required|string|max:255',
                         'serial_number' => 'required|numeric|digits:8|unique:ships,serial_number',
-                        
+                        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                     ];
                 }
 
@@ -37,7 +37,8 @@ class ShipRequest extends FormRequest
                 {
                     return [
                         'name' => 'required|string|max:255',
-                        'serial_number' => 'required|numeric|digits:8|unique:ships,serial_number',
+                        'serial_number' => 'required|numeric',
+                        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                     ];
                 }
         }

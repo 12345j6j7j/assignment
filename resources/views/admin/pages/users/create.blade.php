@@ -65,11 +65,14 @@
                         </div>
                       </div>
                     </div>
+
                     <div class="row">
                       <div class="col d-flex justify-content-end">
-                        <button class="btn btn-primary" type="submit">Save Changes</button>
+                        <a href="{{ \URL::previous() }}" class="btn btn-primary">Back</a>
                       </div>
+                      <button class="btn btn-success" type="submit">Save</button>
                     </div>
+
                   </form>
 
                 </div>

@@ -39,8 +39,10 @@ class ShipController extends Controller
      */
     public function store(ShipRequest $request)
     {
-        $validated = $request->validated();
-        Ship::create($validated);
+        // dd($request->all());
+        
+        // $validated = $request->validated();
+        Ship::create(request()->except('image'));
 
         return Redirect::route('ships.index')->with('systemMessage', 'Your record is successfully added!');
     }
@@ -77,8 +79,7 @@ class ShipController extends Controller
      */
     public function update(ShipRequest $request, Ship $ship)
     {
-        $validated = $request->validated();
-        $ship->update($validated);
+        $ship->update(request()->except('image'));
 
         return Redirect::route('ships.index')->with('systemMessage', 'Your record is successfully updated!');
     }

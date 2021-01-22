@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notification;
+use App\Http\Requests\NotificationRequest;
 
 class NotificationController extends Controller
 {
@@ -33,9 +34,9 @@ class NotificationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NotificationRequest $request)
     {
-        //
+        dd(request()->all());
     }
 
     /**

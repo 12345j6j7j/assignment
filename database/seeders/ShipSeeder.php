@@ -18,7 +18,7 @@ class ShipSeeder extends Seeder
             Ship::factory()->create([
                 'name' => 'Ship number: ' . $i,
                 'serial_number' => rand (10000000,99999999),
-                'image_path' => null,
+                'image' => 'this/is/path/of/image_' . $i,
             ]);    
         }
     }

@@ -15,7 +15,7 @@ trait HasUploudTrait
      *
      * @var string
      */
-    protected $folder = 'uploads/';
+    protected $folder = 'public/uploads/';
 
     /**
      * paginate number
@@ -59,7 +59,7 @@ trait HasUploudTrait
                 $this->getFileName($image));
 
             if (app()->environment() !== 'testing' && !in_array($image->getClientOriginalExtension(), ['pdf', 'doc', 'docx', 'xls', 'xlsx'])) {
-                $img = Image::make(storage_path('app/public/' . $path));
+                $img = Image::make(storage_path('app/' . $path));
 
                 $img->fit(
                     $this->imageWidth,
@@ -68,7 +68,7 @@ trait HasUploudTrait
                         $constraint->upsize();
                 });
 
-                $img->save(storage_path('app/public/' . $path));
+                $img->save(storage_path('app/' . $path));
             }
 
             return $path;

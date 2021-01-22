@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rank;
-use Illuminate\Http\Request;
+use App\Http\Requests\RankRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class RankController extends Controller
 {
@@ -14,7 +15,8 @@ class RankController extends Controller
      */
     public function index()
     {
-        //
+        $ranks = Rank::get();
+        return view('admin.pages.ranks.index', compact('ranks'));
     }
 
     /**
@@ -24,7 +26,7 @@ class RankController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.ranks.create');
     }
 
     /**
@@ -33,9 +35,12 @@ class RankController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RankRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Rank::create($validated);
+
+        return Redirect::route('ranks.index')->with('systemMessage', 'Your record is successfully added!');
     }
 
     /**
@@ -46,7 +51,7 @@ class RankController extends Controller
      */
     public function show(Rank $rank)
     {
-        //
+        return view('admin.pages.ranks.show', compact('rank'));
     }
 
     /**
@@ -57,7 +62,7 @@ class RankController extends Controller
      */
     public function edit(Rank $rank)
     {
-        //
+        return view('admin.pages.ranks.edit', compact('rank'));
     }
 
     /**
@@ -67,9 +72,12 @@ class RankController extends Controller
      * @param  \App\Models\Rank  $rank
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Rank $rank)
+    public function update(RankRequest $request, Rank $rank)
     {
-        //
+        $validated = $request->validated();
+        $rank->update($validated);
+
+        return Redirect::route('ranks.index')->with('systemMessage', 'Your record is successfully updated!');
     }
 
     /**
@@ -80,6 +88,10 @@ class RankController extends Controller
      */
     public function destroy(Rank $rank)
     {
-        //
+        $rank->delete();
+        // return Redirect::route('ships.index')->with('systemMessage', 'Your record is successfully deleted!');
+        return response()->json([
+            'success' => true
+        ], 200);
     }
 }

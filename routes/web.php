@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('admin.pages.home');
+    return view('home');
 });
+
+Route::resource('users', 'UserController');
+Route::resource('ships', 'ShipController');
+Route::resource('notifications', 'NotificationController');
+Route::resource('crew', 'CrewMemberController');
+Route::resource('ranks', 'RankController');

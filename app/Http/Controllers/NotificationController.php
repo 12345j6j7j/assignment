@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notification;
-use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
@@ -14,7 +13,8 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        //
+        $notifications = Notification::get();
+        return view('admin.pages.notifications.index', compact('notifications'));
     }
 
     /**
@@ -24,7 +24,7 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.notifications.create');
     }
 
     /**
@@ -46,7 +46,7 @@ class NotificationController extends Controller
      */
     public function show(Notification $notification)
     {
-        //
+        return view('admin.pages.notifications.show', compact('notification'));
     }
 
     /**
@@ -57,7 +57,7 @@ class NotificationController extends Controller
      */
     public function edit(Notification $notification)
     {
-        //
+        return view('admin.pages.notifications.edit', compact('notification'));
     }
 
     /**

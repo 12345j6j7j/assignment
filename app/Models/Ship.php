@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Ship extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name','serial_number'];
 }

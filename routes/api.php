@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('users', 'API\UserController@index')->name('api.users');
+Route::get('notifications', 'API\NotificationController@index')->name('api.notifications');
+Route::get('ranks', 'API\RankController@index')->name('api.ranks');
+Route::get('ships', 'API\ShipController@index')->name('api.ships');
+Route::get('crew-members', 'API\CrewMemberController@index')->name('api.crew');

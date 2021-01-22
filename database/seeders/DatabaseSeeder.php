@@ -8,8 +8,9 @@ class DatabaseSeeder extends Seeder
 {
     protected $seeders = [
         RoleAndPermissionSeeder::class,
-        NotificationSeeder::class,
+        RankSeeder::class,
         ShipSeeder::class,
+        NotificationSeeder::class,
     ];
         
     /**

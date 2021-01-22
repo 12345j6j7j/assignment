@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ship;
-use Illuminate\Http\Request;
+use App\Http\Requests\ShipRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class ShipController extends Controller
 {
@@ -14,7 +15,10 @@ class ShipController extends Controller
      */
     public function index()
     {
-        //
+        $ships = Ship::get();
+        $systemMessage = session()->get('systemMessage');
+
+        return view('admin.pages.ships.index', compact('ships','systemMessage'));
     }
 
     /**
@@ -24,7 +28,7 @@ class ShipController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.ships.create');
     }
 
     /**
@@ -33,10 +37,14 @@ class ShipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ShipRequest $request)
     {
-        //
+        $validated = $request->validated();
+        Ship::create($validated);
+
+        return Redirect::route('ships.index')->with('systemMessage', 'Your record is successfully added!');
     }
+
 
     /**
      * Display the specified resource.
@@ -46,7 +54,7 @@ class ShipController extends Controller
      */
     public function show(Ship $ship)
     {
-        //
+        return view('admin.pages.ships.show', compact('ship'));
     }
 
     /**
@@ -57,7 +65,7 @@ class ShipController extends Controller
      */
     public function edit(Ship $ship)
     {
-        //
+        return view('admin.pages.ships.edit', compact('ship'));
     }
 
     /**
@@ -67,9 +75,12 @@ class ShipController extends Controller
      * @param  \App\Models\Ship  $ship
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ship $ship)
+    public function update(ShipRequest $request, Ship $ship)
     {
-        //
+        $validated = $request->validated();
+        $ship->update($validated);
+
+        return Redirect::route('ships.index')->with('systemMessage', 'Your record is successfully updated!');
     }
 
     /**
@@ -80,6 +91,10 @@ class ShipController extends Controller
      */
     public function destroy(Ship $ship)
     {
-        //
+        $ship->delete();
+        // return Redirect::route('ships.index')->with('systemMessage', 'Your record is successfully deleted!');
+        return response()->json([
+            'success' => true
+        ], 200);
     }
 }

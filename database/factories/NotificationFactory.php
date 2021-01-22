@@ -23,7 +23,9 @@ class NotificationFactory extends Factory
     public function definition()
     {   
         return [
-            'content' => 'This is the content of notification: '
+            'rank_id' => 1,
+            'name' => 'Notification',
+            'content' => 'This is the content of notification: ',
         ];
     }
 }

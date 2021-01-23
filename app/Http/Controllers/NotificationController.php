@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\GlobalHelper;
 use App\Models\Notification;
 use App\Models\Rank;
 use App\Http\Requests\NotificationRequest;
@@ -9,6 +10,8 @@ use Illuminate\Support\Facades\Redirect;
 
 class NotificationController extends Controller
 {
+    use GlobalHelper;
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +21,7 @@ class NotificationController extends Controller
     {
         //ovde treba paginacija
         $notifications = Notification::get();
+        //ubaci poruke negde
         $systemMessage = session()->get('systemMessage');
 
         return view('admin.pages.notifications.index', compact('notifications','systemMessage'));
@@ -30,10 +34,8 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        $ranks = Rank::select('id', 'name')->get()->pluck('name', 'id');
-
         return view('admin.pages.notifications.create')->with([
-            'ranks' => $ranks->toArray(),
+            'ranks' => $this->getRanks()->toArray(),
         ]);
     }
 
@@ -59,7 +61,11 @@ class NotificationController extends Controller
      */
     public function show(Notification $notification)
     {
-        return view('admin.pages.notifications.show', compact('notification'));
+        return view('admin.pages.notifications.show')->with([
+            'notification' => $notification,
+            'ranks' => $this->getRanks(),
+            'selectedRanks' => $this->getSelectedRanks($notification)
+        ]);
     }
 
     /**
@@ -70,18 +76,10 @@ class NotificationController extends Controller
      */
     public function edit(Notification $notification)
     {
-        $ranks = Rank::select('id', 'name')->get()->pluck('name', 'id');
-
-        $selectedRanks = [];
-
-        foreach ($notification->ranks as $rank) {
-            $selectedRanks[] = $rank->id;
-        }
-        
         return view('admin.pages.notifications.edit')->with([
             'notification' => $notification,
-            'ranks' => $ranks,
-            'selectedRanks' => $selectedRanks
+            'ranks' => $this->getRanks(),
+            'selectedRanks' => $this->getSelectedRanks($notification)
         ]);
     }
 
@@ -97,7 +95,7 @@ class NotificationController extends Controller
         $notification->update($request->all());
         
         $notification->ranks()->detach();
-        $notification->ranks()->attach($request->rank_id);
+        $notification->ranks()->sync($request->rank_id, false);
 
         return Redirect::route('notifications.index')->with('systemMessage', 'Your record is successfully updated!');
     }

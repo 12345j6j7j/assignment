@@ -14,12 +14,18 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+
+// Route::middleware(['auth:web'])->group(function () {
+    Route::get('/', function () {
+        return view('home');
+    });
+// });
 
 Route::resource('users', 'UserController');
 Route::resource('ships', 'ShipController');
 Route::resource('notifications', 'NotificationController');
 Route::resource('crew', 'CrewMemberController');
 Route::resource('ranks', 'RankController');
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

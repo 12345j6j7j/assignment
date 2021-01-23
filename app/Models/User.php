@@ -68,4 +68,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Rank::class);
     }
+
+    /**
+     * method used to make belongs-to-many connection between Notification and Rank model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class)
+            ->withTimestamps();
+    }
 }

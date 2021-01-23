@@ -48,7 +48,19 @@ class NotificationController extends Controller
     public function store(NotificationRequest $request)
     {
         $notification = Notification::create($request->all());
+        
         $notification->ranks()->sync($request->rank_id, false);
+
+        $ranks = $notification->ranks()->with('users')->has('users')->get();
+
+        $userIds = [];
+
+        foreach($ranks as $rank){
+            foreach($rank->users as $user) {
+                $userIds[] = $user->id;
+            }
+        }
+        $deliver = $notification->users()->attach($userIds);
 
         return Redirect::route('notifications.index')->with('systemMessage', 'Your record is successfully added!');
     }

@@ -21,4 +21,14 @@ class Rank extends Model
         return $this->belongsToMany(Notification::class)
             ->withTimestamps();
     }
+
+    /**
+     * method used to make has-many connection between Rank and User model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

@@ -35,6 +35,15 @@ class CreateNotificationsTable extends Migration
             $table->foreign('rank_id')->references('id')->on('ranks')->onDelete('cascade');
             $table->timestamps();
         });
+
+        Schema::create('notification_user', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('notification_id')->index();
+            $table->unsignedBigInteger('user_id')->index();
+            $table->foreign('notification_id')->references('id')->on('notifications')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**

@@ -31,4 +31,15 @@ class Notification extends Model
         return $this->belongsToMany(Rank::class)
             ->withTimestamps();
     }
+
+    /**
+     * method used to make belongs-to-many connection between Notification and Rank model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class)
+            ->withTimestamps();
+    }
 }

@@ -65,24 +65,14 @@
                           <div class="col">
                             <div class="form-group">
                               <label>Rank</label>
-                              <div id="example">
-                                <select id="multiselect"  
-                                class="form-control" 
-                                name="rank_id[]" 
-                                multiple="multiple">
-                                  <option value="1">JavaScript</option>
-                                  <option value="2">CSS</option>
-                                  <option value="3">HTML</option>
-                                  <option value="4">Ruby</option>
-                                  <option value="5">Go</option>
-                                  <option value="6">PHP</option>
-                                  <option value="7">ASP.Net</option>
-                                  <option value="8">Java</option>         
-                                </select>
-                              </div>
+                              
+                              {{ Form::select('rank_id[]', $ranks, $notification->rank_id ?? null, 
+                              ['class' => 'form-control', 'multiple' => 'multiple']) }}
+  
                               @error('rank_id')
                                 <div class="invalid-feedback" style="display: block">{{ $message }}</div>
                               @enderror
+
                             </div>
                           </div>
                         </div>

@@ -12,12 +12,13 @@ class Rank extends Model
     protected $fillable = ['name'];
 
     /**
-     * method used to make has-many connection between Notification and Rank model
+     * method used to make has-many connection between Rank and Notification model
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function notifications()
     {
-        return $this->hasMany(Notification::class);
+        return $this->belongsToMany(Notification::class)
+            ->withTimestamps();
     }
 }

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Http\Requests\UserRequest;
 use App\Models\Rank;
 use App\Models\Ship;
+use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller

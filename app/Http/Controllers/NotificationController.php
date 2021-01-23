@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notification;
+use App\Models\Rank;
 use App\Http\Requests\NotificationRequest;
 use Illuminate\Support\Facades\Redirect;
 
@@ -29,7 +30,11 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.notifications.create');
+        $ranks = Rank::select('id', 'name')->get()->pluck('name', 'id');
+
+        return view('admin.pages.notifications.create')->with([
+            'ranks' => $ranks->toArray(),
+        ]);
     }
 
     /**
@@ -40,8 +45,8 @@ class NotificationController extends Controller
      */
     public function store(NotificationRequest $request)
     {
-        $validated = $request->validated();
-        Notification::create($validated);
+        $notification = Notification::create($request->all());
+        $notification->ranks()->sync($request->rank_id, false);
 
         return Redirect::route('notifications.index')->with('systemMessage', 'Your record is successfully added!');
     }
@@ -65,7 +70,19 @@ class NotificationController extends Controller
      */
     public function edit(Notification $notification)
     {
-        return view('admin.pages.notifications.edit', compact('notification'));
+        $ranks = Rank::select('id', 'name')->get()->pluck('name', 'id');
+
+        $selectedRanks = [];
+
+        foreach ($notification->ranks as $rank) {
+            $selectedRanks[] = $rank->id;
+        }
+        
+        return view('admin.pages.notifications.edit')->with([
+            'notification' => $notification,
+            'ranks' => $ranks,
+            'selectedRanks' => $selectedRanks
+        ]);
     }
 
     /**
@@ -77,8 +94,10 @@ class NotificationController extends Controller
      */
     public function update(NotificationRequest $request, Notification $notification)
     {
-        $validated = $request->validated();
-        $notification->update($validated);
+        $notification->update($request->all());
+        
+        $notification->ranks()->detach();
+        $notification->ranks()->attach($request->rank_id);
 
         return Redirect::route('notifications.index')->with('systemMessage', 'Your record is successfully updated!');
     }

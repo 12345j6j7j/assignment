@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Notification;
 use App\Http\Requests\NotificationRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class NotificationController extends Controller
 {
@@ -14,8 +15,11 @@ class NotificationController extends Controller
      */
     public function index()
     {
+        //ovde treba paginacija
         $notifications = Notification::get();
-        return view('admin.pages.notifications.index', compact('notifications'));
+        $systemMessage = session()->get('systemMessage');
+
+        return view('admin.pages.notifications.index', compact('notifications','systemMessage'));
     }
 
     /**
@@ -36,7 +40,10 @@ class NotificationController extends Controller
      */
     public function store(NotificationRequest $request)
     {
-        dd(request()->all());
+        $validated = $request->validated();
+        Notification::create($validated);
+
+        return Redirect::route('notifications.index')->with('systemMessage', 'Your record is successfully added!');
     }
 
     /**
@@ -68,9 +75,12 @@ class NotificationController extends Controller
      * @param  \App\Models\Notification  $notification
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Notification $notification)
+    public function update(NotificationRequest $request, Notification $notification)
     {
-        //
+        $validated = $request->validated();
+        $notification->update($validated);
+
+        return Redirect::route('notifications.index')->with('systemMessage', 'Your record is successfully updated!');
     }
 
     /**
@@ -81,6 +91,10 @@ class NotificationController extends Controller
      */
     public function destroy(Notification $notification)
     {
-        //
+        $notification->delete();
+        // return Redirect::route('ships.index')->with('systemMessage', 'Your record is successfully deleted!');
+        return response()->json([
+            'success' => true
+        ], 200);
     }
 }

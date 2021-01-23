@@ -17,7 +17,7 @@
                             <h6 class="mb-0">Notification Name</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                            Kenneth Valdez
+                            {{ $notification->name }}
                           </div>
                         </div>
                         <hr>
@@ -26,12 +26,8 @@
                           <div class="col-sm-9">
                             <h6 class="mb-0">Notification Content</h6>
                               <div class="card-body">
-                                  <form method="post" action="" enctype="multipart/form-data">
-                                      @csrf
-                                      <div class="form-group">
-                                          <textarea class="ckeditor form-control" name="wysiwyg-editor"></textarea>
-                                      </div>
-                                  </form>
+                                  <textarea type="text"
+                                   class="form-control text-area">{{ $notification->content }}</textarea>
                               </div>
                           </div>
                         </div>
@@ -41,7 +37,7 @@
                             <div class="row">
                               <div class="col">
                                 <div class="form-group">
-                                  <label>Rank</label>
+                                  <label>Notification is sent to users with rank(s):</label>
                                   
                                   <select class="form-select" multiple aria-label="multiple select example">
                                     <option selected>Open this select menu</option>
@@ -56,7 +52,13 @@
                             
                           </div>
                         </div>
-                       
+
+                      </div>
+                    </div>
+                    
+                    <div class="row">
+                      <div class="col d-flex justify-content-end">
+                        <a href="{{ \URL::previous() }}" class="btn btn-primary">Back</a>
                       </div>
                     </div>
             </div>

@@ -9,15 +9,26 @@ class Notification extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['rank_id','name','content'];
+    protected $fillable = ['name','content'];
+
+    /**
+     * method used to escape html from in content attribute
+     *
+     * @param $value
+     */
+    public function setContentAttribute($value)
+    {
+        $this->attributes['content'] = strip_tags($value);
+    }
     
     /**
-     * method used to make has-many connection between Rank and Notification model
+     * method used to make belongs-to-many connection between Notification and Rank model
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function rank()
+    public function ranks()
     {
-        return $this->belongsTo(Rank::class);
+        return $this->belongsToMany(Rank::class)
+            ->withTimestamps();
     }
 }

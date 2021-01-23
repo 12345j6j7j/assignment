@@ -12,21 +12,30 @@
               
               <div class="col d-flex flex-column flex-sm-row justify-content-between mb-3">
                 <div class="text-center text-sm-left mb-2 mb-sm-0">
-                  <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Create Notification</h4>
+                  <h4 class="pt-sm-2 pb-1 mb-0 text-nowrap">Edit Notification</h4>
                 </div>
               </div>
             </div>
             <div class="tab-content pt-3">
               <div class="tab-pane active">
 
-                <form class="form" novalidate="">
+                <form class="form" action="{{ route('notifications.update', $notification) }}" 
+                      method="post" 
+                      enctype="multipart/form-data">
+                @csrf
+                @method('PATCH')
+                      
                   <div class="row">
                     <div class="col">
                       <div class="row">
                         <div class="col">
                           <div class="form-group">
                             <label>Notification Name</label>
-                            <input class="form-control" type="text" name="name" placeholder="John Smith" value="John Smith">
+                            <input class="form-control" 
+                            type="text" 
+                            name="name" 
+                            placeholder="Name" 
+                            value="{{ old('name', $notification->name) }}">
                           </div>
                         </div>
                       </div>
@@ -38,12 +47,13 @@
                     <div class="col-sm-9">
                       <h6 class="mb-0">Notification Content</h6>
                         <div class="card-body">
-                            <form method="post" action="" enctype="multipart/form-data">
-                                @csrf
-                                <div class="form-group">
-                                    <textarea class="ckeditor form-control" name="wysiwyg-editor"></textarea>
-                                </div>
-                            </form>
+                          <div class="form-group">
+                              <textarea class="ckeditor form-control" 
+                              name="content">{{ old('content', $notification->content) }}</textarea>
+                          </div>
+                            @error('content')
+                              <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                   </div>
@@ -63,6 +73,10 @@
                             </select>
 
                           </div>
+
+                          @error('rank_id')
+                            <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                          @enderror
                         </div>
                       </div>
                       

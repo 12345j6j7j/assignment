@@ -19,7 +19,7 @@
               <div class="tab-content pt-3">
                 <div class="tab-pane active">
 
-                  <form class="form" action="{{ route('notifications.store') }}" method="post">
+                  <form class="form" action="{{ route('notifications.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('POST')
 
@@ -49,9 +49,10 @@
                         <h6 class="mb-0">Notification Content</h6>
                           <div class="card-body">
                               <div class="form-group">
-                                  <textarea class="ckeditor form-control" name="text"></textarea>
+                                  <textarea class="ckeditor form-control" 
+                                  name="content"></textarea>
                               </div>
-                              @error('text')
+                              @error('content')
                                 <div class="invalid-feedback" style="display: block">{{ $message }}</div>
                               @enderror
                           </div>
@@ -65,7 +66,10 @@
                             <div class="form-group">
                               <label>Rank</label>
                               <div id="example">
-                                <select id="multiselect"  class="form-control" name="languages[]" multiple="multiple">
+                                <select id="multiselect"  
+                                class="form-control" 
+                                name="rank_id[]" 
+                                multiple="multiple">
                                   <option value="1">JavaScript</option>
                                   <option value="2">CSS</option>
                                   <option value="3">HTML</option>
@@ -76,6 +80,9 @@
                                   <option value="8">Java</option>         
                                 </select>
                               </div>
+                              @error('rank_id')
+                                <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                              @enderror
                             </div>
                           </div>
                         </div>
@@ -107,7 +114,7 @@
   <link rel="stylesheet" href="MSFmultiSelect.css" />
   <script src="MSFmultiSelect.js"></script>
   <script src="//cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
-  <script type="text/javascript">
+  <script>
     $(document).ready(function () {
         $('.ckeditor').ckeditor();
     });

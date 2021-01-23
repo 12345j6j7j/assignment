@@ -39,8 +39,6 @@ class ShipController extends Controller
      */
     public function store(ShipRequest $request)
     {
-        // dd($request->all());
-        
         // $validated = $request->validated();
         Ship::create(request()->except('image'));
 

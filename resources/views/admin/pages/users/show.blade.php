@@ -17,7 +17,7 @@
                             <h6 class="mb-0">First Name</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                            Kenneth Valdez
+                            {{ $user->name }}
                           </div>
                         </div>
                         <hr>
@@ -26,7 +26,7 @@
                             <h6 class="mb-0">Last Name</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                            fip@jukmuh.al
+                            {{ $user->surname }}
                           </div>
                         </div>
                         <hr>
@@ -35,7 +35,7 @@
                             <h6 class="mb-0">Email</h6>
                           </div>
                           <div class="col-sm-9 text-secondary">
-                            (239) 816-9029
+                            {{ $user->email }}
                           </div>
                         </div>
                       </div>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NotificationRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,19 +27,22 @@ class NotificationRequest extends FormRequest
             case 'POST':
                 {
                     return [
-                        'rank_id' => '',
                         'name' => 'required|string|max:255',
-                        'content' => 'required',
-                        
+                        'surname' => 'required|string|max:255',
+                        'email' => 'required|email|unique:users|max:255',
+                        'password' => 'required|min:6|confirmed|max:255',
                     ];
                 }
 
             case 'PATCH':
                 {
                     return [
-                        'rank_id' => '',
                         'name' => 'required|string|max:255',
-                        'content' => 'required',
+                        'surname' => 'required|string|max:255',
+                        'email' => 'nullable|email|max:255',
+                        'password' => 'nullable|confirmed|min:6|max:255',
+                        'ship_id' => 'numeric',
+                        'rank_id' => 'numeric',
                     ];
                 }
         }

@@ -5,6 +5,18 @@
 @endsection
 
 @section('content')
+
+@if(!empty($systemMessage))
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+            {{ $systemMessage }}
+    </div>
+@endif
+
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -16,9 +28,6 @@
             <h6 class="m-0 font-weight-bold text-primary">List of users</h6>
         </div>
         <div class="card-body">
-            <div class="my-lg-3 d-flex">
-                <a href="{{ route('users.create') }}" class="btn btn-success mr-auto waves-effect"><span class="btn-label"><i class="ion-android-add"></i></span> Create User </a>
-            </div><br>
             <div class="table-responsive">
                 <table class="table table-bordered" id="users_table" width="100%" cellspacing="0">
                     <thead>
@@ -100,23 +109,32 @@
         });
 
         $('#ok_button').click(function() {
+            
+            var _token = "{{ csrf_token() }}";
             var userDeleteUrl = '{{ route("users.destroy", ":id") }}';
             userDeleteUrl = userDeleteUrl.replace(':id', user_id);
 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $.ajax({
                 url: userDeleteUrl,
-                beforeSend:function(){
-                    $('#ok_button').text('Deleting...');
-            },
-            success: function(data) {
-                    setTimeout(function() {
-                        $('#confirmModal').modal('hide');
-                        $('#users_table').DataTable().ajax.reload();
-                    }, 2000);
-                }
-            })
+                type: 'delete',
+                dataType: "json",
+                data: {
+                    'id': user_id,
+                    '_token':_token
+                },
+                success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#users_table').DataTable().ajax.reload();
+                        }, 300);
+                    }
+                })
         });
-
-    } );
+    });
 </script>    
 @endsection

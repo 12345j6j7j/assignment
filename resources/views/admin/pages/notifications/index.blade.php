@@ -5,6 +5,18 @@
 @endsection
 
 @section('content')
+
+@if(!empty($systemMessage))
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+            {{ $systemMessage }}
+    </div>
+@endif
+
 <div class="container-fluid">
 
     <!-- Page Heading -->
@@ -96,21 +108,31 @@
         });
 
         $('#ok_button').click(function() {
+            
+            var _token = "{{ csrf_token() }}";
             var notificationDeleteUrl = '{{ route("notifications.destroy", ":id") }}';
             notificationDeleteUrl = notificationDeleteUrl.replace(':id', notification_id);
 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $.ajax({
                 url: notificationDeleteUrl,
-                beforeSend:function(){
-                    $('#ok_button').text('Deleting...');
-            },
-            success: function(data) {
-                    setTimeout(function() {
-                        $('#confirmModal').modal('hide');
-                        $('#notifications_table').DataTable().ajax.reload();
-                    }, 2000);
-                }
-            })
+                type: 'delete',
+                dataType: "json",
+                data: {
+                    'id': notification_id,
+                    '_token':_token
+                },
+                success: function(data) {
+                        setTimeout(function() {
+                            $('#confirmModal').modal('hide');
+                            $('#notifications_table').DataTable().ajax.reload();
+                        }, 300);
+                    }
+                })
         });
 
     } );

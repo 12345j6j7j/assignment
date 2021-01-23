@@ -17,17 +17,6 @@
     </div>
 @endif
 
-@if(!empty($updated))
-    <div class="alert alert-warning alert-dismissible" role="alert">
-        <button type="button"
-                class="close"
-                data-dismiss="alert"
-                aria-label="Close"><span aria-hidden="true">&times;</span>
-        </button>
-            {{ $updated }}
-    </div>
-@endif
-
 <div class="container-fluid">
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Ships</h1>

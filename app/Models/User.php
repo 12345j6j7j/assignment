@@ -18,11 +18,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['ship_id','rank_id','name','surname','email','password','is_active'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -51,5 +47,25 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    /**
+     * method used to make belongs-to-many connection between User and Ship model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function ship()
+    {
+        return $this->belongsTo(Ship::class);
+    }
+
+    /**
+     * method used to make belongs-to-many connection between User and Rank model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function rank()
+    {
+        return $this->belongsTo(Rank::class);
     }
 }

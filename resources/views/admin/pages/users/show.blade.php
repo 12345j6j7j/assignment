@@ -57,10 +57,16 @@
                               <td>{{ $notification->created_at }}</td>
                             </tr>
                             @endforeach
-                            
+
                           </tbody>
                         </table>
 
+                      </div>
+                    </div>
+                    
+                    <div class="row">
+                      <div class="col d-flex justify-content-end">
+                        <a href="{{ \URL::previous() }}" class="btn btn-primary">Back</a>
                       </div>
                     </div>
             </div>

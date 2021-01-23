@@ -6,10 +6,12 @@ use App\Models\User;
 use App\Models\Rank;
 use App\Models\Ship;
 use App\Http\Requests\UserRequest;
+use App\Traits\GlobalHelper;
 use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
+    use GlobalHelper;
     /**
      * Display a listing of the resource.
      *
@@ -55,8 +57,6 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        // return view('admin.pages.users.show', compact('user'));
-        
         return view('admin.pages.users.show')->with([
             'user' => $user,
             'notifications' => $user->notifications()->get(),
@@ -71,13 +71,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        $ships = Ship::select('id', 'name')->get()->pluck('name', 'id');
-        $ranks = Rank::select('id', 'name')->get()->pluck('name', 'id');
-        
         return view('admin.pages.users.edit')->with([
             'user' => $user,
-            'ships' => $ships->toArray(),
-            'ranks' => $ranks->toArray(),
+            'ships' => $this->getShips()->toArray(),
+            'ranks' => $this->getRanks()->toArray(),
         ]);
     }
 

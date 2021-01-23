@@ -3,12 +3,18 @@
 namespace App\Traits;
 
 use App\Models\Rank;
+use App\Models\Ship;
 
 trait GlobalHelper
 {
     public function getRanks()
     {
         return Rank::select('id', 'name')->get()->pluck('name', 'id');
+    }
+
+    public function getShips()
+    {
+        return Ship::select('id', 'name')->get()->pluck('name', 'id');
     }
 
     public function getSelectedRanks($notification)

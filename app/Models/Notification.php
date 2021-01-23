@@ -11,14 +11,13 @@ class Notification extends Model
 
     protected $fillable = ['name','content'];
 
-    /**
-     * method used to escape html from in content attribute
-     *
-     * @param $value
-     */
-    public function setContentAttribute($value)
+    protected static function boot()
     {
-        $this->attributes['content'] = strip_tags($value);
+        parent::boot();
+
+        static::saving(function ($model) {
+            $model->content = strip_tags($model->content);
+        });
     }
     
     /**
@@ -33,7 +32,7 @@ class Notification extends Model
     }
 
     /**
-     * method used to make belongs-to-many connection between Notification and Rank model
+     * method used to make belongs-to-many connection between Notification and User model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

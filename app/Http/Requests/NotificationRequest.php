@@ -27,7 +27,8 @@ class NotificationRequest extends FormRequest
             case 'POST':
                 {
                     return [
-                        'rank_id' => '',
+                        'rank_id' => 'required',
+                        'rank_id.*' => 'numeric',
                         'name' => 'required|string|max:255',
                         'content' => 'required',
                         
@@ -37,7 +38,8 @@ class NotificationRequest extends FormRequest
             case 'PATCH':
                 {
                     return [
-                        'rank_id' => '',
+                        'rank_id' => 'required',
+                        'rank_id.*' => 'numeric',
                         'name' => 'required|string|max:255',
                         'content' => 'required',
                     ];

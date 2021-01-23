@@ -7,6 +7,7 @@ use App\Models\Notification;
 use App\Models\Rank;
 use App\Http\Requests\NotificationRequest;
 use Illuminate\Support\Facades\Redirect;
+use App\Jobs\SendNotifications;
 
 class NotificationController extends Controller
 {
@@ -51,17 +52,8 @@ class NotificationController extends Controller
         
         $notification->ranks()->sync($request->rank_id, false);
 
-        $ranks = $notification->ranks()->with('users')->has('users')->get();
-
-        $userIds = [];
-
-        foreach($ranks as $rank){
-            foreach($rank->users as $user) {
-                $userIds[] = $user->id;
-            }
-        }
-        $deliver = $notification->users()->attach($userIds);
-
+        dispatch(new SendNotifications($notification));
+        
         return Redirect::route('notifications.index')->with('systemMessage', 'Your record is successfully added!');
     }
 
@@ -76,7 +68,8 @@ class NotificationController extends Controller
         return view('admin.pages.notifications.show')->with([
             'notification' => $notification,
             'ranks' => $this->getRanks(),
-            'selectedRanks' => $this->getSelectedRanks($notification)
+            'selectedRanks' => $this->getSelectedRanks($notification),
+            'users' => $notification->users()->get(),
         ]);
     }
 

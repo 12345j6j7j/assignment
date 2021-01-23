@@ -38,6 +38,29 @@
                             {{ $user->email }}
                           </div>
                         </div>
+                        <hr>
+                        <label>Notifications</label>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Content</th>
+                              <th scope="col">Created At</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            
+                            @foreach ($notifications as $notification)
+                            <tr>
+                              <th scope="row">{{ $loop->iteration }}</th>
+                              <td>{{ $notification->content }}</td>
+                              <td>{{ $notification->created_at }}</td>
+                            </tr>
+                            @endforeach
+                            
+                          </tbody>
+                        </table>
+
                       </div>
                     </div>
             </div>

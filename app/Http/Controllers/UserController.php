@@ -55,7 +55,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('admin.pages.users.show', compact('user'));
+        // return view('admin.pages.users.show', compact('user'));
+        
+        return view('admin.pages.users.show')->with([
+            'user' => $user,
+            'notifications' => $user->notifications()->get(),
+        ]);
     }
 
     /**

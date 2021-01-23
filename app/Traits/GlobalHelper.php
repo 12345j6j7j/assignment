@@ -21,4 +21,19 @@ trait GlobalHelper
 
         return $selectedRanks;
     }
+
+    public function sendNotifications($notification)
+    {
+        $ranks = $notification->ranks()->with('users')->has('users')->get();
+
+        $userIds = [];
+
+        foreach($ranks as $rank){
+            foreach($rank->users as $user) {
+                $userIds[] = $user->id;
+            }
+        }
+        
+        return $deliver = $notification->users()->attach($userIds);
+    }
 }

@@ -53,6 +53,26 @@
                           </div>
                         </div>
 
+                        <label>Users</label>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">First Name</th>
+                              <th scope="col">Last Name</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            @foreach ($users as $user)
+                            <tr>
+                              <th scope="row">{{ $user->id }}</th>
+                              <td>{{ $user->name }}</td>
+                              <td>{{ $user->surname }}</td>
+                            </tr>
+                            @endforeach
+                          </tbody>
+                        </table>
+
                       </div>
                     </div>
                     

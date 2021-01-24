@@ -15,17 +15,39 @@ use App\Http\Controllers\UserController;
 */
 
 
-// Route::middleware(['auth:web'])->group(function () {
-    Route::get('/', function () {
+Route::namespace('Auth')->group(function () {
+    
+    Route::get('login','LoginController@showLoginForm');
+    Route::post('login','LoginController@login')->name('login');
+
+    Route::get('register','RegisterController@showSignupForm');
+    Route::post('register','RegisterController@register')->name('register');
+
+    Route::post('logout','LoginController@logout')->name('logout');
+  });
+
+Route::get('/', function () {
+    return view('auth.login');
+});
+
+Route::get('register', function () {
+    return view('auth.register');
+});
+
+Route::middleware(['auth:web'])->group(function () {
+    
+    Route::get('dashboard', function () {
         return view('home');
+    })->name('dashboard');
+    
+    Route::resource('users', 'UserController');
+    Route::resource('ships', 'ShipController');
+    Route::resource('notifications', 'NotificationController', ['except' => ['edit']]);
+    Route::resource('crew', 'CrewMemberController');
+    Route::resource('ranks', 'RankController');
+    
+    Route::fallback(function () {
+        return back();
     });
-// });
+});
 
-Route::resource('users', 'UserController');
-Route::resource('ships', 'ShipController');
-Route::resource('notifications', 'NotificationController');
-Route::resource('crew', 'CrewMemberController');
-Route::resource('ranks', 'RankController');
-Auth::routes();
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

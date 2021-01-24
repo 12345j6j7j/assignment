@@ -30,6 +30,8 @@ class ShipRequest extends FormRequest
                         'name' => 'required|string|max:255',
                         'serial_number' => 'required|numeric|digits:8|unique:ships,serial_number',
                         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                        'user_id' => 'nullable',
+                        'user_id.*' => 'nullable|numeric',
                     ];
                 }
 
@@ -39,6 +41,8 @@ class ShipRequest extends FormRequest
                         'name' => 'required|string|max:255',
                         'serial_number' => 'required|numeric',
                         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                        'user_id' => 'nullable',
+                        'user_id.*' => 'nullable|numeric',
                     ];
                 }
         }

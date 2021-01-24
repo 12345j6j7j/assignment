@@ -23,7 +23,9 @@ class RoleAndPermissionSeeder extends Seeder
         User::factory()->create([
             'name' => 'Luka', 
             'surname' => 'Radulovic', 
-            'email' => 'mail@gmail.com'
+            'email' => 'mail@mail.com',
+            'password' => 'password',
+            'is_active' => 1,
         ]);
         User::factory(5)->create();
 

@@ -42,6 +42,35 @@
                             </div>
                           </div>
                         </div>
+
+                        @if(!$users->isEmpty())
+                        <label>Crew</label>
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">First Name</th>
+                              <th scope="col">Last Name</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              @foreach ($users as $user)
+                              <tr>
+                                <th scope="row">{{ $loop->iteration }}</th>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->surname }}</td>
+                              </tr>
+                              @endforeach
+                          </tbody>
+                        </table>
+                        @endif
+
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col d-flex justify-content-end">
+                        <a href="{{ \URL::previous() }}" class="btn btn-primary">Back</a>
                       </div>
                     </div>
             </div>

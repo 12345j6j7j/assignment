@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Rank;
 use App\Http\Requests\RankRequest;
 use Illuminate\Support\Facades\Redirect;
+use App\Traits\GlobalHelper;
 
 class RankController extends Controller
 {
+    use GlobalHelper;
+
     /**
      * Display a listing of the resource.
      *
@@ -42,7 +45,7 @@ class RankController extends Controller
         $validated = $request->validated();
         Rank::create($validated);
 
-        return Redirect::route('ranks.index')->with('systemMessage', 'Your record is successfully added!');
+        return Redirect::route('ranks.index')->with('systemMessage', $this->created);
     }
 
     /**
@@ -79,7 +82,7 @@ class RankController extends Controller
         $validated = $request->validated();
         $rank->update($validated);
 
-        return Redirect::route('ranks.index')->with('systemMessage', 'Your record is successfully updated!');
+        return Redirect::route('ranks.index')->with('systemMessage', $this->updated);
     }
 
     /**

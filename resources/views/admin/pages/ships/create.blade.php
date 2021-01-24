@@ -68,6 +68,28 @@
                             <div class="invalid-feedback" style="display: block">{{ $message }}</div>
                           @enderror
                         </div>
+
+                        <div class="row">
+                          <div class="col">
+                            <div class="row">
+                              <div class="col">
+                                <div class="form-group">
+                                  <label>Choose Crew</label>
+                                  
+                                  {{ Form::select('user_ids[]', $users, $ship->user_ids ?? null, 
+                                  ['class' => 'form-control', 'multiple' => 'multiple']) }}
+      
+                                  @error('rank_id')
+                                    <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                  @enderror
+    
+                                </div>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+
                     </div>
                   </div>
 

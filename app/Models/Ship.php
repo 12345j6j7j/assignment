@@ -30,4 +30,14 @@ class Ship extends Model
      * @var int
      */
     protected $imageHeight = 300;
+
+    /**
+     * method used to make has-many connection between Ship and User model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function users()
+    {
+        return $this->hasMany(User::class, 'ship_id');
+    }
 }

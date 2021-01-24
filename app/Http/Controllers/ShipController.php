@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Ship;
 use App\Http\Requests\ShipRequest;
+use App\Traits\GlobalHelper;
 use Illuminate\Support\Facades\Redirect;
 
 class ShipController extends Controller
 {
+    use GlobalHelper;
+
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +31,9 @@ class ShipController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.ships.create');
+        return view('admin.pages.ships.create')->with([
+            'users' => $this->getUsers()->toArray(),
+        ]);
     }
 
     /**
@@ -39,10 +44,9 @@ class ShipController extends Controller
      */
     public function store(ShipRequest $request)
     {
-        // $validated = $request->validated();
-        Ship::create(request()->except('image'));
+        Ship::create($request->except('image'));
 
-        return Redirect::route('ships.index')->with('systemMessage', 'Your record is successfully added!');
+        return Redirect::route('ships.index')->with('systemMessage', $this->created);
     }
 
 
@@ -54,7 +58,10 @@ class ShipController extends Controller
      */
     public function show(Ship $ship)
     {
-        return view('admin.pages.ships.show', compact('ship'));
+        return view('admin.pages.ships.show')->with([
+            'ship' => $ship,
+            'users' => $ship->users()->get(),
+        ]);
     }
 
     /**
@@ -65,7 +72,11 @@ class ShipController extends Controller
      */
     public function edit(Ship $ship)
     {
-        return view('admin.pages.ships.edit', compact('ship'));
+        return view('admin.pages.ships.edit')->with([
+            'ship' => $ship,
+            'users' => $this->getUsers(),
+            'currentCrew' => $this->getCurrentCrew($ship)
+        ]);
     }
 
     /**
@@ -77,9 +88,9 @@ class ShipController extends Controller
      */
     public function update(ShipRequest $request, Ship $ship)
     {
-        $ship->update(request()->except('image'));
+        $ship->update($request->except('image'));
 
-        return Redirect::route('ships.index')->with('systemMessage', 'Your record is successfully updated!');
+        return Redirect::route('ships.index')->with('systemMessage', $this->updated);
     }
 
     /**

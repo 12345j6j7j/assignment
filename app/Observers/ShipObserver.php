@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Ship;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use File;
 
@@ -14,18 +15,42 @@ class ShipObserver
      * @param \App\Ship $ship
      * @throws \ReflectionException
      */
-    public function created(Ship $ship)
+    public function created(Ship $ship) 
     {
         DB::table($ship->getTable())->where('id', $ship->id)->update(['image' => $ship->storeImage()]);
+        
+        if(array_key_exists('user_ids', request()->all())) {
+            $users = User::whereIn('id', request()->user_ids)->get();
+            $ship->users()->saveMany($users);
+        }
     }
 
     /**
-     * Handle the ship "updated" event.
+     * Handle the ship "saving" event.
      *
      * @param \App\Ship $ship
      * @throws \ReflectionException
      */
-    public function updated(Ship $ship)
+    public function saving(Ship $ship)
+    {
+        DB::table($ship->getTable())->where('id', $ship->id)->update(['image' => $ship->storeImage()]);
+
+        if(array_key_exists('user_ids', request()->all())) {
+            $users = User::whereIn('id', request()->user_ids)->get();
+            $ship->users()->update(['ship_id' => null]);
+            $ship->users()->saveMany($users);
+        }
+
+        $ship->users()->update(['ship_id' => null]);
+    }
+
+    /**
+     * Handle the ship "updating" event.
+     *
+     * @param \App\Ship $ship
+     * @throws \ReflectionException
+     */
+    public function updating(Ship $ship)
     {
         DB::table($ship->getTable())->where('id', $ship->id)->update(['image' => $ship->storeImage()]);
     }
@@ -39,27 +64,5 @@ class ShipObserver
     public function deleted(Ship $ship)
     {
         if (!empty($ship->image)) File::delete($ship->image);
-    }
-
-    /**
-     * Handle the ship "restored" event.
-     *
-     * @param \App\Ship $ship
-     * @return void
-     */
-    public function restored(Ship $ship)
-    {
-        //
-    }
-
-    /**
-     * Handle the ship "force deleted" event.
-     *
-     * @param \App\Ship $ship
-     * @return void
-     */
-    public function forceDeleted(Ship $ship)
-    {
-        //
     }
 }

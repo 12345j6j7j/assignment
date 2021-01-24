@@ -8,6 +8,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -18,7 +19,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = ['ship_id','rank_id','name','surname','email','password','is_active'];
+    protected $fillable = ['ship_id', 'rank_id', 'name', 'surname', 'email', 'password', 'is_active'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -38,6 +39,54 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * set user's hash password
+     *
+     * @param $value
+     */
+    public function setPasswordAttribute($value)
+    {
+        if (!empty($value)) {
+            $this->attributes['password'] = bcrypt($value);
+        }
+    }
+    
+    /**
+     * set user's is_active attribute
+     *
+     * @param $value
+     */
+    public function setIsActiveAttribute($value)
+    {
+        if (!empty($value)) {
+            $this->attributes['is_active'] = 0;
+        }
+    }
+    
+    /**
+     * capitalize user's first_name attribute
+     *
+     * @param $value
+     */
+    public function setNameAttribute($value)
+    {
+        if (!empty($value)) {
+            $this->attributes['name'] = ucfirst(strtolower($value));
+        }
+    }
+
+    /**
+     * capitalize user's last_name attribute
+     *
+     * @param $value
+     */
+    public function setSurnameAttribute($value)
+    {
+        if (!empty($value)) {
+            $this->attributes['surname'] = ucfirst(strtolower($value));
+        }
+    }
 
     /**
      * method used to make belongs-to-many connection between User and Role model

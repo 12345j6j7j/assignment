@@ -6,16 +6,7 @@
 
 @section('content')
 
-@if(!empty($systemMessage))
-    <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button"
-                class="close"
-                data-dismiss="alert"
-                aria-label="Close"><span aria-hidden="true">&times;</span>
-        </button>
-            {{ $systemMessage }}
-    </div>
-@endif
+@include('partials.system_messages')
 
 <div class="container-fluid">
 
@@ -89,7 +80,13 @@
                 { data: 'name', name: 'name' },
                 { data: 'surname', name: 'surname' },
                 { data: 'email', name: 'email' },
-                { data: 'created_at', name: 'created_at' },
+                { 
+                    data: 'created_at',
+                            "render": function ( data, type, full, meta ) {
+                                return moment(data).format('DD MMM, YYYY. (HH:mm:ss)');
+                            },
+                    name: 'created_at'
+                },
                 { "render": function ( data, type, full, meta ) {
                         var userShowURL = '{{ route("users.show", ":id") }}';
                         var userEditURL = '{{ route("users.edit", ":id") }}';
@@ -98,7 +95,7 @@
                         return '<a href="'+userShowURL+'" class="btn btn-secondary btn-small waves-effect"><i class="ion-show"></i> Show</a> <a href="'+userEditURL+'" class="btn btn-primary btn-small waves-effect"><i class="ion-edit"></i> Edit</a> <button type="button" name="delete" id="'+full.id+'" class="delete btn btn-danger btn-small waves-effect"><i class="ion-android-remove"></i> Delete</button>';
                 } }
             ],
-            "order": [[ 1, "asc" ]],
+            "order": [[ 0, "asc" ]],
         } );
 
         var user_id;

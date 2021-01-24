@@ -6,16 +6,7 @@
 
 @section('content')
 
-@if(!empty($systemMessage))
-    <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button"
-                class="close"
-                data-dismiss="alert"
-                aria-label="Close"><span aria-hidden="true">&times;</span>
-        </button>
-            {{ $systemMessage }}
-    </div>
-@endif
+@include('partials.system_messages')
 
 <div class="container-fluid">
     <!-- Page Heading -->
@@ -89,7 +80,13 @@
                 { data: 'id', name: 'id' },
                 { data: 'name', name: 'name' },
                 { data: 'serial_number', name: 'serial_number' },
-                { data: 'created_at', name: 'created_at' },
+                { 
+                    data: 'created_at',
+                            "render": function ( data, type, full, meta ) {
+                                return moment(data).format('DD MMM, YYYY. (HH:mm:ss)');
+                            },
+                    name: 'created_at'
+                },
                 { "render": function ( data, type, full, meta ) {
                         var shipShowURL = '{{ route("ships.show", ":id") }}';
                         var shipEditURL = '{{ route("ships.edit", ":id") }}';
@@ -98,7 +95,7 @@
                         return '<a href="'+shipShowURL+'" class="btn btn-secondary btn-small waves-effect"><i class="ion-show"></i> Show</a> <a href="'+shipEditURL+'" class="btn btn-primary btn-small waves-effect"><i class="ion-edit"></i> Edit</a> <button type="button" name="delete" id="'+full.id+'" class="delete btn btn-danger btn-small waves-effect"><i class="ion-android-remove"></i> Delete</button>';
                 } }
             ],
-            "order": [[ 1, "asc" ]],
+            "order": [[ 0, "desc" ]],
         } );
 
         var ship_id;

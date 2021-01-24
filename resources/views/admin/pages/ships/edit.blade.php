@@ -69,6 +69,27 @@
                             @enderror
                           </div>
 
+                          <div class="row">
+                            <div class="col">
+                              <div class="row">
+                                <div class="col">
+                                  <div class="form-group">
+                                    <label>Edit Crew</label>
+                                    
+                                    {{ Form::select('user_ids[]', $users, $currentCrew, 
+                                    ['class' => 'form-control', 'multiple' => 'multiple']) }}
+        
+                                    @error('user_ids')
+                                      <div class="invalid-feedback" style="display: block">{{ $message }}</div>
+                                    @enderror
+        
+                                  </div>
+                                </div>
+                              </div>
+                              
+                            </div>
+                          </div>
+
                       </div>
                     </div>
                     

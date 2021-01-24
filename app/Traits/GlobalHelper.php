@@ -4,9 +4,14 @@ namespace App\Traits;
 
 use App\Models\Rank;
 use App\Models\Ship;
+use App\Models\User;
 
 trait GlobalHelper
 {
+    public $created = ['created' => 'Your record is successfully created!'];
+    public $updated = ['updated' =>'Your record is successfully updated!'];
+    public $deleted = ['deleted' =>'Your record is successfully deleted!'];
+
     public function getRanks()
     {
         return Rank::select('id', 'name')->get()->pluck('name', 'id');
@@ -15,6 +20,11 @@ trait GlobalHelper
     public function getShips()
     {
         return Ship::select('id', 'name')->get()->pluck('name', 'id');
+    }
+
+    public function getUsers()
+    {
+        return User::select('id', 'name')->get()->pluck('name', 'id');
     }
 
     public function getSelectedRanks($notification)
@@ -26,6 +36,17 @@ trait GlobalHelper
         }
 
         return $selectedRanks;
+    }
+    
+    public function getCurrentCrew($ship)
+    {
+        $currentCrew = [];
+
+        foreach ($ship->users as $user) {
+            $currentCrew[] = $user->id;
+        }
+
+        return $currentCrew;
     }
 
     public function sendNotifications($notification)

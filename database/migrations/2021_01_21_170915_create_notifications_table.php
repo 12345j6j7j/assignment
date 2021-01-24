@@ -23,7 +23,7 @@ class CreateNotificationsTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('ship_id')->index()->nullable()->default(null)->after('id');
             $table->unsignedBigInteger('rank_id')->index()->nullable()->default(null)->after('ship_id');
-            $table->foreign('ship_id')->references('id')->on('ships')->onDelete('set null');
+            $table->foreign('ship_id')->references('id')->on('ships')->onUpdate('cascade');
             $table->foreign('rank_id')->references('id')->on('ranks')->onDelete('set null');
         });
         

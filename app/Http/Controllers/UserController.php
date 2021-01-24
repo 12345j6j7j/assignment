@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Rank;
-use App\Models\Ship;
 use App\Http\Requests\UserRequest;
 use App\Traits\GlobalHelper;
 use Illuminate\Support\Facades\Redirect;
@@ -12,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 class UserController extends Controller
 {
     use GlobalHelper;
+    
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +45,7 @@ class UserController extends Controller
         $validated = $request->validated();
         User::create($validated);
 
-        return Redirect::route('users.index')->with('systemMessage', 'Your record is successfully added!');
+        return Redirect::route('users.index')->with('systemMessage', $this->created);
     }
 
     /**
@@ -90,7 +89,7 @@ class UserController extends Controller
         $validated = $request->validated();
         $user->update($validated);
 
-        return Redirect::route('users.index')->with('systemMessage', 'Your record is successfully updated!');
+        return Redirect::route('users.index')->with('systemMessage', $this->updated);
     }
 
     /**

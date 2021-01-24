@@ -39,6 +39,8 @@
                           </div>
                         </div>
                         <hr>
+                        
+                        @if(!$notifications->isEmpty())
                         <label>Notifications</label>
                         <table class="table">
                           <thead>
@@ -49,17 +51,16 @@
                             </tr>
                           </thead>
                           <tbody>
-                            
-                            @foreach ($notifications as $notification)
-                            <tr>
-                              <th scope="row">{{ $loop->iteration }}</th>
-                              <td>{{ $notification->content }}</td>
-                              <td>{{ $notification->created_at }}</td>
-                            </tr>
-                            @endforeach
-
+                              @foreach ($notifications as $notification)
+                              <tr>
+                                <th scope="row">{{ $loop->iteration }}</th>
+                                <td>{{ $notification->content }}</td>
+                                <td>{{ $notification->created_at }}</td>
+                              </tr>
+                              @endforeach
                           </tbody>
                         </table>
+                        @endif
 
                       </div>
                     </div>

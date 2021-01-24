@@ -19,13 +19,9 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        //ovde treba paginacija
-        $notifications = Notification::orderBy('id','desc')->get();
-
-        //ubaci poruke negde
         $systemMessage = session()->get('systemMessage');
 
-        return view('admin.pages.notifications.index', compact('notifications','systemMessage'));
+        return view('admin.pages.notifications.index', compact('systemMessage'));
     }
 
     /**

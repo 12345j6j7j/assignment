@@ -18,10 +18,9 @@ class ShipController extends Controller
      */
     public function index()
     {
-        $ships = Ship::get();
         $systemMessage = session()->get('systemMessage');
 
-        return view('admin.pages.ships.index', compact('ships','systemMessage'));
+        return view('admin.pages.ships.index', compact('systemMessage'));
     }
 
     /**

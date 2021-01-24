@@ -18,10 +18,9 @@ class RankController extends Controller
      */
     public function index()
     {
-        $ranks = Rank::get();
         $systemMessage = session()->get('systemMessage');
 
-        return view('admin.pages.ranks.index', compact('ranks','systemMessage'));
+        return view('admin.pages.ranks.index', compact('systemMessage'));
     }
 
     /**

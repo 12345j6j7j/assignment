@@ -39,9 +39,9 @@ class ShipObserver
             $users = User::whereIn('id', request()->user_ids)->get();
             $ship->users()->update(['ship_id' => null]);
             $ship->users()->saveMany($users);
+        } else {
+            $ship->users()->update(['ship_id' => null]);
         }
-
-        $ship->users()->update(['ship_id' => null]);
     }
 
     /**

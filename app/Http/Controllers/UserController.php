@@ -18,10 +18,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::get();
         $systemMessage = session()->get('systemMessage');
 
-        return view('admin.pages.users.index', compact('users','systemMessage'));
+        return view('admin.pages.users.index', compact('systemMessage'));
     }
 
     /**

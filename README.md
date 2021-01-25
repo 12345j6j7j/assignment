@@ -12,10 +12,13 @@
 - cp .env.example .env 
 
 -> adjust .env settings:
+
 Open .env in your IDE and set db connection as described bellow
 
 DB_DATABASE={db name}
+
 DB_USERNAME={db username}
+
 DB_PASSWORD={db password}
 
 back to console and type: 
@@ -27,4 +30,5 @@ If you are using Laravel server
 - type in console: php artisan serve
 
 Email: mail@mail.com
+
 Password: password
